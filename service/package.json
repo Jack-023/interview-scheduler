@@ -1,0 +1,27 @@
+{
+  "name": "interview-scheduler",
+  "version": "0.0.1",
+  "description": "Hack7 Interview Scheduler.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SEEK-Jobs/interview-scheduler.git"
+  },
+  "keywords": [
+    "interview",
+    "scheduler",
+    "twilio",
+    "text",
+    "message",
+    "hack7"
+  ],
+  "author": "Jack Jordan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SEEK-Jobs/interview-scheduler/issues"
+  },
+  "homepage": "https://github.com/SEEK-Jobs/interview-scheduler#readme"
+}
