@@ -1,0 +1,24 @@
+{
+  "name": "interview-scheduler",
+  "version": "0.0.1",
+  "description": "Hack7 Interview Scheduler",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SEEK-Jobs/interview-scheduler.git"
+  },
+  "author": "Jack Jordan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SEEK-Jobs/interview-scheduler/issues"
+  },
+  "homepage": "https://github.com/SEEK-Jobs/interview-scheduler#readme",
+  "devDependencies": {
+    "eslint": "^3.11.1",
+    "eslint-config-airbnb-base": "^10.0.1",
+    "eslint-plugin-import": "^2.2.0"
+  }
+}
