@@ -1,0 +1,18 @@
+{
+  "extends": "airbnb-base",
+  "env": {
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "globals": {},
+  "rules": {
+    "comma-dangle": 0,
+    "padded-blocks": 0,
+    "indent": ["error", 4],
+    "arrow-body-style": ["error", "always"],
+    "strict": "off",
+    "import/no-extraneous-dependencies" : "off",
+    "no-console": "off"
+  }
+}
