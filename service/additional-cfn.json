@@ -1,0 +1,43 @@
+{
+    "EventsDynamoDbTable" : {
+        "Type" : "AWS::DynamoDB::Table",
+        "Properties" : {
+            "TableName" : "${self:service}-interview-data",
+            "AttributeDefinitions": [{
+                "AttributeName" : "interviewId",
+                "AttributeType" : "S"
+            }],
+            "KeySchema": [{
+                "AttributeName": "interviewId",
+                "KeyType": "HASH"
+            }],
+            "ProvisionedThroughput" : {
+                "ReadCapacityUnits" : "${self:provider.config.${opt:stage}.dynamoDbReads}",
+                "WriteCapacityUnits" : "${self:provider.config.${opt:stage}.dynamoDbWrites}"
+            }
+        }
+    },
+    "IamPolicyLambdaToDynamoDb": {
+        "Type": "AWS::IAM::Policy",
+        "Properties": {
+            "PolicyName": "${self:service}-${opt:stage}-lambda-to-dynamodb",
+            "PolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [{
+                    "Effect": "Allow",
+                    "Action": [
+                        "dynamodb:GetItem",
+                        "dynamodb:BatchGetItem",
+                        "dynamodb:Query",
+                        "dynamodb:PutItem",
+                        "dynamodb:UpdateItem",
+                        "dynamodb:DeleteItem",
+                        "dynamodb:BatchWriteItem"
+                    ],
+                    "Resource": [ "arn:aws:dynamodb:${self:provider.region}:${self:provider.config.${opt:stage}.account}:table/${self:service}-event-data" ]
+                }]
+            },
+            "Roles": [{ "Ref": "IamRoleLambdaExecution" }]
+        }
+    }
+}

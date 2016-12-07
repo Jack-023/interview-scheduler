@@ -21,6 +21,8 @@ provider:
     name: aws
     runtime: nodejs4.3
     region: ap-southeast-2
+    config: ${file(./serverless.env.yml)}
+
 
 functions:
     hello:
@@ -30,6 +32,10 @@ functions:
                 path: hello
                 method: get
                 integration: lambda-proxy
+
+resources:
+    Resources: ${file(./additional-cfn.json)}
+
 
 # you can overwrite defaults here
 #  stage: dev
