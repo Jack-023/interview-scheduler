@@ -25,12 +25,12 @@ provider:
 
 
 functions:
-    hello:
-        handler: functions/handler.hello
+    createInterview:
+        handler: functions/createInterview.createInterview
         events:
             - http:
-                path: hello
-                method: get
+                path: apply
+                method: post
                 integration: lambda-proxy
 
 resources:
