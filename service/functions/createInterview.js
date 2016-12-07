@@ -8,7 +8,11 @@ module.exports.createInterview = (data, context, callback) => {
     const payload = JSON.parse(data);
 
     if (!payload.candidateName || !payload.candidatePhNo) {
-        // callback with some error
+        callback(null, {
+            statusCode: 500,
+            headers: { 'Content-Type': 'text/plain' },
+            body: 'Internal Server Error.'
+        });
     }
 
     const guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
