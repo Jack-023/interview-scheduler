@@ -1,0 +1,13 @@
+{
+    "interviewId": "Primary key, GUID (stored as string) - PRIMARY KEY",
+    "advertiserPhNo": "String - phone number for advertiser",
+    "advertiserName": "string, full name in the format [FirstName LastName]",
+    "advertiserCompany": "String, company name",
+    "postionName": "Job title - string",
+    "candidatePhNo": "string, ph number",
+    "candidateName": "same as adver",
+    "interviewTime": "Optional - default null, dateTime",
+    "responseStatus": "String - values: [accepted, declined, noResponse, notSent]",
+    "advertiserEmail": "Optional, default null, string",
+    "sendReminder": "[no, txt, email]"
+}
