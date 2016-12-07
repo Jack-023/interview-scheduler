@@ -6,8 +6,11 @@
     "postionName": "Job title - string",
     "candidatePhNo": "string, ph number",
     "candidateName": "same as adver",
+    "candidateEmail": "same as adver",
+    "candidatePreviousRole": "string, default null",
     "interviewTime": "Optional - default null, dateTime",
     "responseStatus": "String - values: [accepted, declined, noResponse, notSent]",
     "advertiserEmail": "Optional, default null, string",
-    "sendReminder": "[no, txt, email]"
-}
+    "sendReminder": "[no, txt, email]",
+    "interviewOrTrial": "String, [interview, trial] (default interview)"
+ }
