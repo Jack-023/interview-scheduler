@@ -5,7 +5,8 @@ const storageService = require('../lib/storageService');
 
 module.exports.createInterview = (data, context, callback) => {
 
-    const payload = JSON.parse(data);
+    // console.log(storageService.addInterview);
+    const payload = JSON.parse(data.body);
 
     if (!payload.candidateName || !payload.candidatePhNo) {
         callback(null, {
@@ -52,8 +53,8 @@ module.exports.createInterview = (data, context, callback) => {
         interviewOrTrial: 'interview'
     };
 
-
-    storageService.addInterview(interview).then(() => {
+    const sS = storageService();
+    sS.addInterview(interview).then(() => {
         callback(null, {
             statusCode: 200,
             body: JSON.stringify({

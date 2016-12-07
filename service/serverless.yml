@@ -27,6 +27,8 @@ provider:
 functions:
     createInterview:
         handler: functions/createInterview.createInterview
+        memorySize: 128
+        timeout: 3
         events:
             - http:
                 path: apply

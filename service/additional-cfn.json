@@ -1,5 +1,5 @@
 {
-    "EventsDynamoDbTable" : {
+    "InterviewsDynamoDbTable" : {
         "Type" : "AWS::DynamoDB::Table",
         "Properties" : {
             "TableName" : "${self:service}-interview-data",
@@ -34,7 +34,7 @@
                         "dynamodb:DeleteItem",
                         "dynamodb:BatchWriteItem"
                     ],
-                    "Resource": [ "arn:aws:dynamodb:${self:provider.region}:${self:provider.config.${opt:stage}.account}:table/${self:service}-event-data" ]
+                    "Resource": [ "arn:aws:dynamodb:${self:provider.region}:${self:provider.config.${opt:stage}.account}:table/${self:service}-interview-data" ]
                 }]
             },
             "Roles": [{ "Ref": "IamRoleLambdaExecution" }]
