@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 const storageService = require('../lib/storageService');
 // This file recieves candidate data and saves it in the DynamoDB

@@ -1,15 +1,20 @@
-const AWS = require("aws-sdk");
-const docClient = new AWS.DynamoDB.DocumentClient();
+'use strict';
 
-module.exports = () => {
-  return {
-    getAllInterviewList: ()=> {
-      docClient.scan({TableName: "interview-scheduler-interview-data"}, (err, data) => {
-        if (err)
-          console.log(JSON.stringify(err, null, 2));
-        else
-          return JSON.stringify(data);
-      });
-    }
-  }
+const storageService = require('../lib/storageService');
+
+module.exports.getAllInterviewList = (payload, context, callback) => {
+
+    storageService.getAllInterviewList().then((response) => {
+        callback(null, {
+            statusCode: 200,
+            body: response
+        });
+    }).catch((err) => {
+        console.log(JSON.stringify(err));
+        callback(null, {
+            statusCode: 500,
+            headers: { 'Content-Type': 'text/plain' },
+            body: 'Internal Server Error.'
+        });
+    });
 };
