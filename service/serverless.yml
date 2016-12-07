@@ -33,6 +33,13 @@ functions:
                 method: get
                 integration: lambda-proxy
 
+   getAllInterviewList:
+           handler: functions/getAllInterviewList.getAllInterviewList
+           events:
+               - http:
+                   path: getAllInterviewList
+                   method: get
+                   integration: lambda-proxy
 resources:
     Resources: ${file(./additional-cfn.json)}
 
