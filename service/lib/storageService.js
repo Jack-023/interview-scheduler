@@ -63,6 +63,31 @@ module.exports = () => {
                     }
                 });
             });
+        },
+        setResponseStatus: (interviewId) => {
+            const params = {
+                TableName: 'interview-scheduler-interview-data',
+                Key: {
+                    interviewId: interviewId
+                },
+                UpdateExpression: 'set responseStatus =:responseStatus',
+                ExpressionAttributeValues: {
+                    ':responseStatus': 'noResponse'
+                },
+                ReturnValues: 'UPDATED_NEW'
+            };
+            console.log(params);
+            return new Promise((resolve, reject) => {
+                docClient.update(params, (err, data) => { //eslint-disable-line
+                    if (err) {
+                        console.log('Error updating time');
+                        reject(err);
+                    } else {
+                        console.log(data);
+                        resolve();
+                    }
+                });
+            });
         }
     };
 };
