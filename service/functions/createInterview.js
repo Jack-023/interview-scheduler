@@ -37,7 +37,6 @@ module.exports.createInterview = (data, context, callback) => {
 
     const interview = {
         interviewId: guid,
-        advertiserPhNo: null,
         advertiserName: 'SEEK',
         advertiserCompany: 'Seek',
         postionName: 'Barista',
@@ -45,9 +44,7 @@ module.exports.createInterview = (data, context, callback) => {
         candidateName: payload.candidateName,
         candidateEmail: email,
         candidateCurrentRole: currentRole,
-        interviewTime: null,
         responseStatus: 'notSent',
-        advertiserEmail: null,
         sendReminder: 'no',
         interviewOrTrial: 'interview'
     };
