@@ -64,6 +64,14 @@ functions:
                     method: post
                     integration: lambda-proxy
 
+    responseHandler:
+        handler: functions/responseHandler.responseHandler
+        events:
+            - http:
+                path: textResponse
+                method: post
+                integration: lambda-proxy
+
     sendReminder:
                 handler: functions/sendReminder.sendReminder
                 events:
@@ -71,6 +79,7 @@ functions:
                         path: sendReminder
                         method: post
                         integration: lambda-proxy
+                        
 resources:
     Resources: ${file(./additional-cfn.json)}
 
