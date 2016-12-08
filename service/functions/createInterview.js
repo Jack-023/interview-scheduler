@@ -5,7 +5,6 @@ const storageService = require('../lib/storageService');
 
 module.exports.createInterview = (data, context, callback) => {
 
-    // console.log(storageService.addInterview);
     const payload = JSON.parse(data.body);
 
     if (!payload.candidateName || !payload.candidatePhNo) {

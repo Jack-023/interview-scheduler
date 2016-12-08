@@ -21,6 +21,22 @@ module.exports = () => {
                     }
                 });
             });
+        },
+        getAllInterviewList: () => {
+            const params = {
+                TableName: 'interview-scheduler-interview-data',
+            };
+            return new Promise((resolve, reject) => {
+                docClient.scan(params, (err, data) => {
+                    if (err) {
+                        console.log('Failed to read from DynamoDB.');
+                        reject(err);
+                    }
+                    else { //eslint-disable-line
+                        resolve(JSON.stringify(data));
+                    }
+                });
+            });
         }
     };
 };
