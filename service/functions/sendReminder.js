@@ -32,33 +32,35 @@ module.exports.sendReminder = (data, context, callback) => {
                     reject(err);
                 }
                 else { // eslint-disable-line
-                    const sS = storageService();
-                    sS.setResponseStatus(payload.interviewId).then(() => {
-                        callback(null, {
-                            statusCode: 200
+                    if (data.Item.responseStatus === 'notSent') {
+                        const sS = storageService();
+                        sS.setResponseStatus(payload.interviewId).then(() => {
+                            callback(null, {
+                                statusCode: 200
+                            });
+                        }).catch((err) => {
+                            console.log(err);
+                            callback(null, {
+                                statusCode: 500
+                            });
                         });
-                    }).catch((err) => {
-                        console.log(err);
-                        callback(null, {
-                            statusCode: 500
-                        });
-                    });
-                    const ts = twilio();
-                    console.log(data);
-                    const date = moment(data.Item.interviewTime).format('dddd, MMMM Do YYYY');
-                    const time = moment(data.Item.interviewTime).format('hh:mm');
-                    console.log(data);
-                    const message = `${data.Item.candidateName}, you have an interview with ${data.Item.advertiserName} from ${data.Item.advertiserCompany}`
-                        + ` on ${date} at ${time}. Can you confirm that still works for you? A YES or NO will do! Please ring ${data.Item.advertiserPhNo} if`
-                        + ' you cannot attend or want to reschedule your interview.';
+                        const ts = twilio();
+                        console.log(data);
+                        const date = moment(data.Item.interviewTime).format('dddd, MMMM Do YYYY');
+                        const time = moment(data.Item.interviewTime).format('hh:mm');
+                        console.log(data);
+                        const message = `${data.Item.candidateName}, you have an interview with ${data.Item.advertiserName} from ${data.Item.advertiserCompany}`
+                            + ` on ${date} at ${time}. Can you confirm that still works for you? A YES or NO will do! Please ring ${data.Item.advertiserPhNo} if`
+                            + ' you cannot attend or want to reschedule your interview.';
 
-                    ts.sendMessage(data.Item.candidatePhNo, message).then((resp) => {
-                        console.log(resp);
-                        resolve();
-                    }).catch((error) => {
-                        console.log(error);
-                        reject(error);
-                    });
+                        ts.sendMessage(data.Item.candidatePhNo, message).then((resp) => {
+                            console.log(resp);
+                            resolve();
+                        }).catch((error) => {
+                            console.log(error);
+                            reject(error);
+                        });
+                    }
                 }
             });
         });
