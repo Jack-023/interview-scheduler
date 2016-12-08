@@ -2,6 +2,10 @@
 
 const storageService = require('../lib/storageService');
 
+const pft = require('../lib/postFirstText');
+
+const messenger = pft();
+
 module.exports.setTime = (data, context, callback) => {
 
     const payload = JSON.parse(data.body);
@@ -13,8 +17,16 @@ module.exports.setTime = (data, context, callback) => {
     } else {
         const sS = storageService();
         sS.setTime(payload.interviewId, payload.interviewTime).then(() => {
-            callback(null, {
-                statusCode: 200
+            console.log(payload.interviewId);
+            messenger.postFirstText(payload.interviewId).then(() => {
+                callback(null, {
+                    statusCode: 200
+                });
+            }).catch((err) => {
+                console.log('couldnt send msg', err);
+                callback(null, {
+                    statusCode: 500
+                });
             });
         }).catch((err) => {
             console.log(err);
