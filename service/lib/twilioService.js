@@ -2,7 +2,7 @@
 
 const aws = require('aws-sdk'); // eslint-disable-line
 const config = require('../config.json'); // eslint-disable-line
-const docClient = new aws.DynamoDB.DocumentClient();
+const twilio = require('twilio'); // eslint-disable-line
 
 module.exports = () => {
     return {
