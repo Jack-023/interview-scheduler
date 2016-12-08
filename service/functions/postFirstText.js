@@ -1,20 +1,17 @@
 'use strict';
-const aws = require("aws-sdk");
-const docClient = new aws.DynamoDB.DocumentClient();
-const twilio = require("../lib/twilioService");
 
-module.exports.postFirstText = (data, context, callback)=> {
-    const payload = JSON.parse(data.body);
-    if (!payload.id) {
-        callback(null, {
-            statusCode: 500
-        });
-    } else {
-        var param = {
-            TableName: `interview-scheduler-interview-data`,
+const aws = require("aws-sdk"); //eslint-disable-line
+
+const docClient = new aws.DynamoDB.DocumentClient();
+const twilio = require('../lib/twilioService');
+
+module.exports.postFirstText = (id) => {
+    return new Promise((resolve, reject) => {
+        const param = {
+            TableName: 'interview-scheduler-interview-data',
             ConsistentRead: true,
             Key: {
-                interviewId: payload.id
+                interviewId: id
             }
         };
         docClient.get(param, (err, data) => {
@@ -22,11 +19,16 @@ module.exports.postFirstText = (data, context, callback)=> {
                 console.log(JSON.stringify(err, null, 2));
                 reject(err);
             }
-            else {
+            else { // eslint-disable-line
                 const ts = twilio();
-                ts.sendMessage(data);
-                resolve();
+                ts.sendMessage(data).then((message) => {
+                    console.log(message);
+                    resolve();
+                }).catch((error) => {
+                    console.log(error);
+                    reject(error);
+                });
             }
         });
-    }
+    });
 };
