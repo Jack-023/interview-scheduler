@@ -61,6 +61,11 @@ module.exports.sendReminder = (data, context, callback) => {
                             reject(error);
                         });
                     }
+                    else{
+                        callback(null, {
+                            statusCode: 200
+                        });
+                    }
                 }
             });
         });
