@@ -41,18 +41,24 @@ module.exports = () => {
         setTime: (id, time) => {
             const params = {
                 TableName: 'interview-scheduler-interview-data',
-                Key: { candidateId: id },
-                AttributeUpdates: {
-                    interviewTime: time,
-                    responseStatus: 'notSent'
-                }
+                Key: {
+                    interviewId: id
+                },
+                UpdateExpression: 'set interviewTime =:interviewTime, responseStatus =:responseStatus',
+                ExpressionAttributeValues: {
+                    ':interviewTime': time,
+                    ':responseStatus': 'notSent'
+                },
+                ReturnValues: 'UPDATED_NEW'
             };
+            console.log(params);
             return new Promise((resolve, reject) => {
                 docClient.update(params, (err, data) => { //eslint-disable-line
                     if (err) {
                         console.log('Error updating time');
                         reject(err);
                     } else {
+                        console.log(data);
                         resolve();
                     }
                 });

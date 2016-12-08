@@ -8,21 +8,18 @@ module.exports.setTime = (data, context, callback) => {
 
     if (!payload.candidateId || !payload.interviewTime) {
         callback(null, {
-            statusCode: 500,
-            body: 'Internal Server Error.'
+            statusCode: 500
         });
     } else {
         const sS = storageService();
         sS.setTime(payload.candidateId, payload.interviewTime).then(() => {
             callback(null, {
-                statusCode: 200,
-                body: 'OK'
+                statusCode: 200
             });
         }).catch((err) => {
             console.log(err);
             callback(null, {
-                statusCode: 500,
-                body: 'Internal Server Error.'
+                statusCode: 500
             });
         });
     }
