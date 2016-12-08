@@ -43,7 +43,8 @@ module.exports = () => {
                 TableName: 'interview-scheduler-interview-data',
                 Key: { candidateId: id },
                 AttributeUpdates: {
-                    interviewTime: time
+                    interviewTime: time,
+                    responseStatus: 'notSent'
                 }
             };
             return new Promise((resolve, reject) => {

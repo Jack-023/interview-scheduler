@@ -55,9 +55,9 @@ functions:
                     path: getAllInterviewList
                     method: get
                     integration: lambda-proxy
-                    
+
     updateTime:
-            handler: functions/updateTime.updateTime
+            handler: functions/updateTime.setTime
             events:
                 - http:
                     path: updateTime
