@@ -1,6 +1,7 @@
 'use strict';
 
 const aws = require('aws-sdk'); // eslint-disable-line
+const twilioService = require('twilioService'); // eslint-disable-line
 const docClient = new aws.DynamoDB.DocumentClient();
 
 module.exports = () => {
@@ -34,6 +35,27 @@ module.exports = () => {
                     }
                     else { //eslint-disable-line
                         resolve(JSON.stringify(data));
+                    }
+                });
+            });
+        },
+        sendFirstText: (interviewId) => {
+            const params = {
+                TableName: `interview-scheduler-interview-data`,
+                ConsistentRead: true,
+                Key: {
+                    interviewId: interviewId
+                }
+            };
+            return new Promise((resolve, reject) => {
+                docClient.get(params, (err, data) => {
+                    if (err) {
+                        console.log('Failed to read from DynamoDB.');
+                        reject(err);
+                    }
+                    else { //eslint-disable-line
+                      twilioService(data);
+                        resolve();
                     }
                 });
             });
