@@ -72,6 +72,14 @@ functions:
                 method: post
                 integration: lambda-proxy
 
+    sendReminder:
+                handler: functions/sendReminder.sendReminder
+                events:
+                    - http:
+                        path: sendReminder
+                        method: post
+                        integration: lambda-proxy
+                        
 resources:
     Resources: ${file(./additional-cfn.json)}
 
