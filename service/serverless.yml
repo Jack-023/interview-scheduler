@@ -47,6 +47,7 @@ functions:
                 path: apply
                 method: post
                 integration: lambda-proxy
+                cors: true
 
     getAllInterviewList:
             handler: functions/getAllInterviewList.getAllInterviewList
@@ -55,6 +56,7 @@ functions:
                     path: getAllInterviewList
                     method: get
                     integration: lambda-proxy
+                    cors: true
 
     updateTime:
             handler: functions/updateTime.setTime
@@ -63,6 +65,7 @@ functions:
                     path: updateTime
                     method: post
                     integration: lambda-proxy
+                    cors: true
 
     responseHandler:
         handler: functions/responseHandler.responseHandler
@@ -71,6 +74,7 @@ functions:
                 path: textResponse
                 method: post
                 integration: lambda-proxy
+                cors: true
 
     sendReminder:
                 handler: functions/sendReminder.sendReminder
@@ -79,7 +83,8 @@ functions:
                         path: sendReminder
                         method: post
                         integration: lambda-proxy
-                        
+                        cors: true
+
 resources:
     Resources: ${file(./additional-cfn.json)}
 

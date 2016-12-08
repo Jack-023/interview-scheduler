@@ -3,8 +3,6 @@
 const aws = require('aws-sdk'); //eslint-disable-line
 const moment = require('moment-timezone');
 
-moment.tz.setDefault('Australia/Victoria');
-
 const docClient = new aws.DynamoDB.DocumentClient();
 const twilio = require('../lib/twilioService');
 
@@ -28,8 +26,8 @@ module.exports = () => {
                     else { // eslint-disable-line
                         const ts = twilio();
                         console.log(data);
-                        const date = moment(data.Item.interviewTime).format('dddd, MMMM Do YYYY');
-                        const time = moment(data.Item.interviewTime).format('hh:mm');
+                        const date = moment(data.Item.interviewTime).tz('Australia/Sydney').format('dddd, MMMM Do YYYY');
+                        const time = moment(data.Item.interviewTime).tz('Australia/Sydney').format('h:mma');
                         console.log(data);
                         const message = `Hi ${data.Item.candidateName}, you have an interview with ${data.Item.advertiserName} from ${data.Item.advertiserCompany} on`
                         + ` ${date} at ${time}. Please ring ${data.Item.advertiserPhNo} if you cannot attend or want to reschedule your interview.`

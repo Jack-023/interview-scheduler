@@ -16,6 +16,11 @@ module.exports.responseHandler = (data, context, callback) => {
             statusCode: 400
         });
     } else {
+        if (resp === 'yes') {
+            resp = 'accepted';
+        } else {
+            resp = 'declined';
+        }
         sS.updateResponse(from, resp).then(() => {
             callback(null, {
                 statusCode: 200

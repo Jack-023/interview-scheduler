@@ -4,8 +4,6 @@ const aws = require('aws-sdk'); //eslint-disable-line
 const moment = require('moment-timezone');
 const storageService = require('../lib/storageService');
 
-moment.tz.setDefault('Australia/Victoria');
-
 const docClient = new aws.DynamoDB.DocumentClient();
 const twilio = require('../lib/twilioService');
 
@@ -31,6 +29,10 @@ module.exports.sendReminder = (data, context, callback) => {
                     console.log(JSON.stringify(err, null, 2));
                     reject(err);
                 }
+                if (!data.Item.interviewTime) {
+                    console.log('no time found.');
+                    reject('notime');
+                }
                 else { // eslint-disable-line
                     if (data.Item.responseStatus === 'notSent') {
                         const sS = storageService();
@@ -47,9 +49,9 @@ module.exports.sendReminder = (data, context, callback) => {
                         });
                         const ts = twilio();
                         console.log(data);
-                        const date = moment(data.Item.interviewTime).format('dddd, MMMM Do YYYY');
-                        const time = moment(data.Item.interviewTime).format('hh:mm');
-                        console.log(data);
+                        const date = moment(data.Item.interviewTime).tz('Australia/Sydney').format('dddd, MMMM Do YYYY');
+                        const time = moment(data.Item.interviewTime).tz('Australia/Sydney').format('h:mma');
+                        console.log(date, time);
                         const message = `${data.Item.candidateName}, you have an interview with ${data.Item.advertiserName} from ${data.Item.advertiserCompany}`
                             + ` on ${date} at ${time}. Can you confirm that still works for you? A YES or NO will do! Please ring ${data.Item.advertiserPhNo} if`
                             + ' you cannot attend or want to reschedule your interview.';
