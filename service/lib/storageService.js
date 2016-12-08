@@ -64,11 +64,11 @@ module.exports = () => {
                 });
             });
         },
-        setResponseStatus: (interviewId,status) => {
+        setResponseStatus: (interviewId, status) => {
             const params = {
                 TableName: 'interview-scheduler-interview-data',
                 Key: {
-                    interviewId: interviewId
+                    interviewId
                 },
                 UpdateExpression: 'set responseStatus =:responseStatus',
                 ExpressionAttributeValues: {
@@ -85,6 +85,56 @@ module.exports = () => {
                     } else {
                         console.log(data);
                         resolve();
+                    }
+                });
+            });
+        },
+        updateResponse: (candidatePhNo, status) => {
+            return new Promise((resolve, reject) => {
+                console.log(candidatePhNo);
+                const params = {
+                    TableName: 'interview-scheduler-interview-data',
+                    FilterExpression: 'candidatePhNo= :candidatePhNo',
+                    ExpressionAttributeValues: {
+                        ':candidatePhNo': candidatePhNo
+                    }
+                };
+                docClient.scan(params, (err, data) => {
+                    if (err) {
+                        console.log('Failed to read from DynamoDB.');
+                        reject(err);
+                    }
+                    else { //eslint-disable-line
+                        console.log(data);
+                        const params2 = {
+                            TableName: 'interview-scheduler-interview-data',
+                            Key: {
+                                interviewId: data.Items[0].interviewId
+                            },
+                            UpdateExpression: 'set responseStatus =:responseStatus',
+                            ExpressionAttributeValues: {
+                                ':responseStatus': status
+                            },
+                            ReturnValues: 'UPDATED_NEW'
+                        };
+                        console.log(params2);
+                        new Promise((res, rej) => {
+                            docClient.update(params2, (error, data) => { //eslint-disable-line
+                                if (error) {
+                                    console.log('Error updating status');
+                                    console.log(error);
+                                    rej(error);
+                                } else {
+                                    console.log(data);
+                                    res();
+                                }
+                            });
+                        }).then(() => {
+                            resolve();
+                        }).catch((error) => {
+                            console.log(error);
+                            reject(error);
+                        });
                     }
                 });
             });
