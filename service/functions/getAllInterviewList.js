@@ -1,10 +1,11 @@
 'use strict';
 
 const storageService = require('../lib/storageService');
+const sS = storageService();
 
 module.exports.getAllInterviewList = (payload, context, callback) => {
 
-    storageService.getAllInterviewList().then((response) => {
+    sS.getAllInterviewList().then((response) => {
         callback(null, {
             statusCode: 200,
             body: response

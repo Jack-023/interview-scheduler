@@ -22,6 +22,19 @@ provider:
     runtime: nodejs4.3
     region: ap-southeast-2
     config: ${file(./serverless.env.yml)}
+    iamRoleStatements:
+        - Effect: "Allow"
+          Action:
+              - "dynamodb:GetItem"
+              - "dynamodb:BatchGetItem"
+              - "dynamodb:Query"
+              - "dynamodb:PutItem"
+              - "dynamodb:UpdateItem"
+              - "dynamodb:DeleteItem"
+              - "dynamodb:BatchWriteItem"
+              - "dynamodb:Scan"
+          Resource:
+              - "arn:aws:dynamodb:${self:provider.region}:${self:provider.config.${opt:stage}.account}:table/${self:service}-interview-data"
 
 
 functions:
@@ -33,13 +46,13 @@ functions:
                 method: post
                 integration: lambda-proxy
 
-   getAllInterviewList:
-           handler: functions/getAllInterviewList.getAllInterviewList
-           events:
-               - http:
-                   path: getAllInterviewList
-                   method: get
-                   integration: lambda-proxy
+    getAllInterviewList:
+            handler: functions/getAllInterviewList.getAllInterviewList
+            events:
+                - http:
+                    path: getAllInterviewList
+                    method: get
+                    integration: lambda-proxy
 resources:
     Resources: ${file(./additional-cfn.json)}
 

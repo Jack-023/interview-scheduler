@@ -1,11 +1,11 @@
-// 'use strict';
+'use strict';
 
 const storageService = require('../lib/storageService');
 // This file recieves candidate data and saves it in the DynamoDB
 
 module.exports.createInterview = (data, context, callback) => {
 
-    const payload = JSON.parse(data);
+    const payload = JSON.parse(data.body);
 
     if (!payload.candidateName || !payload.candidatePhNo) {
         callback(null, {
@@ -52,8 +52,8 @@ module.exports.createInterview = (data, context, callback) => {
         interviewOrTrial: 'interview'
     };
 
-
-    storageService.addInterview(interview).then(() => {
+    const sS = storageService();
+    sS.addInterview(interview).then(() => {
         callback(null, {
             statusCode: 200,
             body: JSON.stringify({
