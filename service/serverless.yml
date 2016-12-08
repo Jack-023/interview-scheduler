@@ -55,6 +55,14 @@ functions:
                     path: getAllInterviewList
                     method: get
                     integration: lambda-proxy
+                    
+    updateTime:
+            handler: functions/updateTime.updateTime
+            events:
+                - http:
+                    path: updateTime
+                    method: post
+                    integration: lambda-proxy
 resources:
     Resources: ${file(./additional-cfn.json)}
 

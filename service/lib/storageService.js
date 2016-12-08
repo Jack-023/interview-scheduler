@@ -24,7 +24,7 @@ module.exports = () => {
         },
         getAllInterviewList: () => {
             const params = {
-                TableName: 'interview-scheduler-interview-data',
+                TableName: 'interview-scheduler-interview-data'
             };
             return new Promise((resolve, reject) => {
                 docClient.scan(params, (err, data) => {
@@ -34,6 +34,25 @@ module.exports = () => {
                     }
                     else { //eslint-disable-line
                         resolve(JSON.stringify(data));
+                    }
+                });
+            });
+        },
+        setTime: (id, time) => {
+            const params = {
+                TableName: 'interview-scheduler-interview-data',
+                Key: { candidateId: id },
+                AttributeUpdates: {
+                    interviewTime: time
+                }
+            };
+            return new Promise((resolve, reject) => {
+                docClient.update(params, (err, data) => { //eslint-disable-line
+                    if (err) {
+                        console.log('Error updating time');
+                        reject(err);
+                    } else {
+                        resolve();
                     }
                 });
             });
