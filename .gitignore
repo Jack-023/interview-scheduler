@@ -47,3 +47,5 @@ _meta
 #misc
 .vscode/
 *.orig
+
+**/config.json
