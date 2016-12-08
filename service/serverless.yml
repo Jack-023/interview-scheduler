@@ -64,13 +64,6 @@ functions:
                     method: post
                     integration: lambda-proxy
 
-    postFirstText:
-                handler: functions/postFirstText.postFirstText
-                events:
-                    - http:
-                        path: postFirstText
-                        method: post
-                        integration: lambda-proxy
 resources:
     Resources: ${file(./additional-cfn.json)}
 
