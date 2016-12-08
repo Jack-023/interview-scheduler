@@ -1,7 +1,7 @@
 'use strict';
 
 const aws = require('aws-sdk'); // eslint-disable-line
-const twilioService = require('twilioService'); // eslint-disable-line
+const twilioService = require('../lib/twilioService'); // eslint-disable-line
 const docClient = new aws.DynamoDB.DocumentClient();
 
 module.exports = () => {
@@ -40,6 +40,7 @@ module.exports = () => {
             });
         },
         sendFirstText: (interviewId) => {
+          const ts = twilioService();
             const params = {
                 TableName: `interview-scheduler-interview-data`,
                 ConsistentRead: true,
@@ -54,7 +55,7 @@ module.exports = () => {
                         reject(err);
                     }
                     else { //eslint-disable-line
-                      twilioService(data);
+                      ts.sendMessage(data);
                         resolve();
                     }
                 });
