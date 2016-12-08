@@ -6,13 +6,13 @@ module.exports.setTime = (data, context, callback) => {
 
     const payload = JSON.parse(data.body);
 
-    if (!payload.candidateId || !payload.interviewTime) {
+    if (!payload.interviewId || !payload.interviewTime) {
         callback(null, {
             statusCode: 500
         });
     } else {
         const sS = storageService();
-        sS.setTime(payload.candidateId, payload.interviewTime).then(() => {
+        sS.setTime(payload.interviewId, payload.interviewTime).then(() => {
             callback(null, {
                 statusCode: 200
             });
