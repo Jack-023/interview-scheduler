@@ -34,7 +34,8 @@ module.exports.sendReminder = (data, context, callback) => {
                 else { // eslint-disable-line
                     if (data.Item.responseStatus === 'notSent') {
                         const sS = storageService();
-                        sS.setResponseStatus(payload.interviewId).then(() => {
+                        const status = 'noResponse';
+                        sS.setResponseStatus(payload.interviewId, status).then(() => {
                             callback(null, {
                                 statusCode: 200
                             });

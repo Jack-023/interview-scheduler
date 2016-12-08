@@ -64,7 +64,7 @@ module.exports = () => {
                 });
             });
         },
-        setResponseStatus: (interviewId) => {
+        setResponseStatus: (interviewId,status) => {
             const params = {
                 TableName: 'interview-scheduler-interview-data',
                 Key: {
@@ -72,7 +72,7 @@ module.exports = () => {
                 },
                 UpdateExpression: 'set responseStatus =:responseStatus',
                 ExpressionAttributeValues: {
-                    ':responseStatus': 'noResponse'
+                    ':responseStatus': status
                 },
                 ReturnValues: 'UPDATED_NEW'
             };
