@@ -13,4 +13,4 @@
     "advertiserEmail": "Optional, default null, string",
     "sendReminder": "[no, txt, email]",
     "interviewOrTrial": "String, [interview, trial] (default interview)"
- }
+}
