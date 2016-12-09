@@ -13,7 +13,10 @@ module.exports.responseHandler = (data, context, callback) => {
 
     if (resp !== 'yes' && resp !== 'no') {
         callback(null, {
-            statusCode: 400
+            statusCode: 400,
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     } else {
         if (resp === 'yes') {
@@ -23,12 +26,18 @@ module.exports.responseHandler = (data, context, callback) => {
         }
         sS.updateResponse(from, resp).then(() => {
             callback(null, {
-                statusCode: 200
+                statusCode: 200,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }).catch((err) => {
             console.log(err);
             callback(null, {
-                statusCode: 500
+                statusCode: 500,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         });
     }

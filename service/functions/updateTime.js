@@ -12,7 +12,10 @@ module.exports.setTime = (data, context, callback) => {
 
     if (!payload.interviewId || !payload.interviewTime) {
         callback(null, {
-            statusCode: 500
+            statusCode: 500,
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     } else {
         const sS = storageService();
@@ -20,18 +23,27 @@ module.exports.setTime = (data, context, callback) => {
             console.log(payload.interviewId);
             messenger.postFirstText(payload.interviewId).then(() => {
                 callback(null, {
-                    statusCode: 200
+                    statusCode: 200,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*'
+                    }
                 });
             }).catch((err) => {
                 console.log('couldnt send msg', err);
                 callback(null, {
-                    statusCode: 500
+                    statusCode: 500,
+                    headers: {
+                        'Access-Control-Allow-Origin': '*'
+                    }
                 });
             });
         }).catch((err) => {
             console.log(err);
             callback(null, {
-                statusCode: 500
+                statusCode: 500,
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         });
     }

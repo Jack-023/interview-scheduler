@@ -10,7 +10,9 @@ module.exports.createInterview = (data, context, callback) => {
     if (!payload.candidateName || !payload.candidatePhNo) {
         callback(null, {
             statusCode: 500,
-            headers: { 'Content-Type': 'text/plain' },
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            },
             body: 'Internal Server Error.'
         });
     }
@@ -25,14 +27,10 @@ module.exports.createInterview = (data, context, callback) => {
 
     if (payload.candidateCurrentRole) {
         currentRole = payload.candidateCurrentRole;
-    } else {
-        currentRole = null;
     }
 
     if (payload.candidateEmail) {
         email = payload.candidateEmail;
-    } else {
-        email = null;
     }
 
     const interview = {
@@ -44,11 +42,14 @@ module.exports.createInterview = (data, context, callback) => {
         candidatePhNo: payload.candidatePhNo,
         candidateName: payload.candidateName,
         candidateEmail: email,
-        candidateCurrentRole: currentRole,
         responseStatus: 'notSent',
         sendReminder: 'no',
         interviewOrTrial: 'interview'
     };
+
+    if (currentRole) {
+        interview.candidateCurrentRole = currentRole;
+    }
 
     const sS = storageService();
     sS.addInterview(interview).then(() => {
@@ -56,13 +57,18 @@ module.exports.createInterview = (data, context, callback) => {
             statusCode: 200,
             body: JSON.stringify({
                 message: 'OK'
-            })
+            }),
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     }).catch((err) => {
         console.log(err);
         callback(null, {
             statusCode: 500,
-            headers: { 'Content-Type': 'text/plain' },
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            },
             body: 'Internal Server Error.'
         });
     });

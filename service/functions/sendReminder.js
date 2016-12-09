@@ -12,7 +12,10 @@ module.exports.sendReminder = (data, context, callback) => {
 
     if (!payload.interviewId) {
         callback(null, {
-            statusCode: 500
+            statusCode: 500,
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     } else {
         console.log('start');
@@ -39,12 +42,18 @@ module.exports.sendReminder = (data, context, callback) => {
                         const status = 'noResponse';
                         sS.setResponseStatus(payload.interviewId, status).then(() => {
                             callback(null, {
-                                statusCode: 200
+                                statusCode: 200,
+                                headers: {
+                                    'Access-Control-Allow-Origin': '*'
+                                }
                             });
                         }).catch((err) => {
                             console.log(err);
                             callback(null, {
-                                statusCode: 500
+                                statusCode: 500,
+                                headers: {
+                                    'Access-Control-Allow-Origin': '*'
+                                }
                             });
                         });
                         const ts = twilio();
@@ -52,8 +61,8 @@ module.exports.sendReminder = (data, context, callback) => {
                         const date = moment(data.Item.interviewTime).tz('Australia/Sydney').format('dddd, MMMM Do YYYY');
                         const time = moment(data.Item.interviewTime).tz('Australia/Sydney').format('h:mma');
                         console.log(date, time);
-                        const message = `${data.Item.candidateName}, you have an interview with ${data.Item.advertiserName} from ${data.Item.advertiserCompany}`
-                            + ` on ${date} at ${time}. Can you confirm that still works for you? A YES or NO will do! Please ring ${data.Item.advertiserPhNo} if`
+                        const message = `INTERVIEW REMINDER. Hi ${data.Item.candidateName}, you have an interview with ${data.Item.advertiserName} from ${data.Item.advertiserCompany}`
+                            + ` for ${data.Item.postionName} at ${date} at ${time}. Can you confirm that still works for you? A YES or NO will do! Please ring ${data.Item.advertiserPhNo} if`
                             + ' you cannot attend or want to reschedule your interview.';
 
                         ts.sendMessage(data.Item.candidatePhNo, message).then((resp) => {
@@ -66,7 +75,10 @@ module.exports.sendReminder = (data, context, callback) => {
                     }
                     else{
                         callback(null, {
-                            statusCode: 200
+                            statusCode: 200,
+                            headers: {
+                                'Access-Control-Allow-Origin': '*'
+                            }
                         });
                     }
                 }

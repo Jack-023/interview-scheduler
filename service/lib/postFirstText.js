@@ -29,8 +29,11 @@ module.exports = () => {
                         const date = moment(data.Item.interviewTime).tz('Australia/Sydney').format('dddd, MMMM Do YYYY');
                         const time = moment(data.Item.interviewTime).tz('Australia/Sydney').format('h:mma');
                         console.log(data);
-                        const message = `Hi ${data.Item.candidateName}, you have an interview with ${data.Item.advertiserName} from ${data.Item.advertiserCompany} on`
-                        + ` ${date} at ${time}. Please ring ${data.Item.advertiserPhNo} if you cannot attend or want to reschedule your interview.`
+                        const message = `INTERVIEW CONFIRMED. Hi ${data.Item.candidateName}, your `
+                        + `interview with ${data.Item.advertiserName} at ${data.Item.advertiserCompany}`
+                        + ` for ${data.Item.postionName}`
+                        + ` is confirmed for ${date} at ${time}. Please call ${data.Item.advertiserPhNo} if you have any questions.`
+                        + ` We look forward to seeing you then.`;
 
                         ts.sendMessage(data.Item.candidatePhNo, message).then((resp) => {
                             console.log(resp);
